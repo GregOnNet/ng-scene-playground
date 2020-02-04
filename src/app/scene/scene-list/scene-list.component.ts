@@ -1,10 +1,5 @@
-import {
-  AfterViewChecked,
-  Component,
-  OnInit,
-  QueryList,
-  ViewChildren
-} from '@angular/core';
+import { CdkDragDrop } from '@angular/cdk/drag-drop';
+import { Component, OnInit, QueryList, ViewChildren } from '@angular/core';
 import { Scene, SceneApi } from '../scene-api.service';
 
 @Component({
@@ -12,7 +7,7 @@ import { Scene, SceneApi } from '../scene-api.service';
   templateUrl: './scene-list.component.html',
   styleUrls: ['./scene-list.component.scss']
 })
-export class SceneListComponent implements OnInit, AfterViewChecked {
+export class SceneListComponent implements OnInit {
   @ViewChildren('randomPicture')
   randomPicture: QueryList<HTMLImageElement>;
 
@@ -24,7 +19,7 @@ export class SceneListComponent implements OnInit, AfterViewChecked {
     this.sceneApi.loadScenes().subscribe(scenes => (this.scenes = scenes));
   }
 
-  ngAfterViewChecked(): void {
-    this.randomPicture.toArray().map(pic => console.log(pic));
+  notifyDropped(event: CdkDragDrop<string[]>) {
+    console.log(event);
   }
 }

@@ -21,20 +21,20 @@ export class SceneApi {
   loadScenes(): Observable<Scene[]> {
     return this.http
       .get<{ results: Scene[] }>('https://swapi.co/api/people/')
-      .pipe(
-        map(apiResult =>
-          apiResult.results.map(scene => ({
-            ...scene,
-            images: [
-              {
-                source: 'https://picsum.photos/200/300',
-                width: 200,
-                height: 200
-              }
-            ]
-          }))
-        )
-      );
+      .pipe(map(api => api.results.map(scene => this.toScene(scene))));
+  }
+
+  private toScene(scene: Scene): Scene {
+    return {
+      ...scene,
+      images: [
+        {
+          source: 'https://picsum.photos/200/300',
+          width: 200,
+          height: 200
+        }
+      ]
+    };
   }
 
   updateScene(scene: Scene) {

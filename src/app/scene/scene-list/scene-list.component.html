@@ -1,8 +1,14 @@
-<div *ngFor="let scene of scenes">
+<div
+  *ngFor="let scene of scenes"
+  cdkDropList
+  (cdkDropListDropped)="notifyDropped($event)"
+>
   <h2>
     {{ scene.name }}
   </h2>
   <img
+    cdkDrag
+    (cdkDragDropped)="notifyDropped($event)"
     *ngFor="let image of scene.images"
     #randomPicture
     [attr.src]="image.source"
