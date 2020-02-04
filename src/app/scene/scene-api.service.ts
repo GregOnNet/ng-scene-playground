@@ -3,8 +3,15 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-interface Scene {
+export interface Image {
+  source: string;
+  width: number;
+  height: number;
+}
+
+export interface Scene {
   name: string;
+  images: Image[];
 }
 
 @Injectable({ providedIn: 'root' })
@@ -13,7 +20,24 @@ export class SceneApi {
 
   loadScenes(): Observable<Scene[]> {
     return this.http
-      .get<{ results: Scene[] }>('https://swapi.co/api/people')
-      .pipe(map(apiResult => apiResult.results));
+      .get<{ results: Scene[] }>('https://swapi.co/api/people/')
+      .pipe(
+        map(apiResult =>
+          apiResult.results.map(scene => ({
+            ...scene,
+            images: [
+              {
+                source: 'https://picsum.photos/200/300',
+                width: 200,
+                height: 200
+              }
+            ]
+          }))
+        )
+      );
+  }
+
+  updateScene(scene: Scene) {
+    return this.http.put('some url', scene);
   }
 }

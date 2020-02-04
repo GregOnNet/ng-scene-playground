@@ -1,3 +1,13 @@
-<ul>
-  <li *ngFor="let scene of scenes">{{ scene.name }}</li>
-</ul>
+<div *ngFor="let scene of scenes">
+  <h2>
+    {{ scene.name }}
+  </h2>
+  <img
+    *ngFor="let image of scene.images"
+    #randomPicture
+    [attr.src]="image.source"
+    [attr.width]="image.width"
+    [attr.height]="image.height"
+    alt="random picture"
+  />
+</div>
