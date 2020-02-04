@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
+import { SceneApi } from '../scene-api.service';
 
 @Component({
   selector: 'app-scene-list',
@@ -6,10 +8,11 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./scene-list.component.scss']
 })
 export class SceneListComponent implements OnInit {
+  scenes: Observable<any>;
 
-  constructor() { }
+  constructor(private sceneApi: SceneApi) {}
 
   ngOnInit() {
+    this.sceneApi.loadScenes().subscribe(scenes => (this.scenes = scenes));
   }
-
 }
